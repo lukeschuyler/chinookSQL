@@ -92,3 +92,24 @@ FROM Track t, Album al, Genre g, MediaType mt
 ON t.AlbumId = al.AlbumId 
 AND t.GenreId = g.GenreId 
 AND t.MediaTypeId = mt.MediaTypeId
+
+-- 17. 
+SELECT i.*, COUNT(il.InvoiceId)
+FROM Invoice i, InvoiceLine il
+ON i.InvoiceId = il.InvoiceId
+GROUP BY (i.InvoiceId)
+
+-- 18.
+SELECT e.FirstName, e.LastName, SUM (i.Total)
+FROM Employee e, Invoice i, Customer c
+ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
+GROUP BY (e.EmployeeId)
+
+-- 19.
+SELECT e.FirstName, e.LastName, SUM (i.Total)
+FROM Employee e, Invoice i, Customer c
+ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
+WHERE substr (i.InvoiceDate, 1, 4) = '2009'
+GROUP BY (e.EmployeeId)
+ORDER BY -i.Total
+LIMIT 1
