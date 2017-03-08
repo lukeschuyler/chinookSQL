@@ -105,7 +105,7 @@ FROM Employee e, Invoice i, Customer c
 ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
 GROUP BY (e.EmployeeId)
 
--- 19.
+-- 19. STEVE JOHNSON
 SELECT e.FirstName, e.LastName, SUM (i.Total)
 FROM Employee e, Invoice i, Customer c
 ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
@@ -113,3 +113,67 @@ WHERE substr (i.InvoiceDate, 1, 4) = '2009'
 GROUP BY (e.EmployeeId)
 ORDER BY -i.Total
 LIMIT 1
+
+-- 20. JANE PEACOCK
+SELECT e.FirstName, e.LastName, SUM (i.Total)
+FROM Employee e, Invoice i, Customer c
+ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
+WHERE substr (i.InvoiceDate, 1, 4) = '2010'
+GROUP BY (e.EmployeeId)
+ORDER BY -i.Total
+LIMIT 1
+
+-- 21. "Margaret"	"Park"
+SELECT e.FirstName, e.LastName, SUM (i.Total)
+FROM Employee e, Invoice i, Customer c
+ON e.EmployeeId = c.SupportRepId AND i.CustomerId = c.CustomerId
+GROUP BY (e.EmployeeId)
+ORDER BY -i.Total
+LIMIT 1
+
+-- 22.
+SELECT e.FirstName AS 'Emp FirstName', e.LastName AS 'Emp LastName', COUNT(c.SupportRepId)
+FROM Customer c, Employee e
+WHERE e.EmployeeId = c.SupportRepId
+GROUP BY (e.EmployeeId)
+
+-- 23.
+SELECT i.BillingCountry, SUM(i.Total)
+FROM Invoice i
+GROUP BY (i.BillingCountry)
+ORDER BY (-SUM(i.Total))
+-- LIMIT 1 if you just wanted the country with the most
+
+-- 24.
+SELECT iL.TrackId, t.Name AS 'TRACK NAME', COUNT(iL.TrackId)
+FROM Track t, Invoice i, InvoiceLine iL
+ON t.TrackId = iL.TrackId AND i.InvoiceId = iL.InvoiceId 
+WHERE substr (i.InvoiceDate, 1, 4) = '2013'
+GROUP BY (t.Name)
+ORDER BY (-COUNT(iL.TrackId))
+
+-- 25.
+SELECT iL.TrackId, t.Name AS 'TRACK NAME', COUNT(iL.TrackId)
+FROM Track t, Invoice i, InvoiceLine iL
+ON t.TrackId = iL.TrackId AND i.InvoiceId = iL.InvoiceId 
+GROUP BY (t.Name)
+ORDER BY (-COUNT(iL.TrackId))
+LIMIT 5
+
+-- 26.
+SELECT ar.Name AS 'Artist Name', COUNT(iL.TrackId)
+FROM Artist ar, Track t, Album al, Invoice i, InvoiceLine iL
+ON t.AlbumId = al.AlbumId 
+AND al.ArtistId = ar.ArtistId 
+AND t.TrackId = iL.TrackId 
+AND i.InvoiceId = iL.InvoiceId 
+GROUP BY (ar.Name)
+ORDER BY (-COUNT(iL.TrackId))
+LIMIT 3
+
+-- 27.
+SELECT m.Name, COUNT(t.MediaTypeId)
+FROM MediaType m, Track t, Invoice I, InvoiceLine iL
+ON m.MediaTypeId = t.MediaTypeId AND t.TrackId = iL.TrackId AND i.InvoiceId = iL.InvoiceId
+GROUP BY (m.Name)
+ORDER BY (-COUNT(t.MediaTypeId))
