@@ -73,3 +73,22 @@ AND al.ArtistId = ar.ArtistId
 AND al.AlbumId = t.AlbumId
 
 -- 14.
+SELECT BillingCountry, COUNT(*)
+FROM Invoice
+GROUP BY BillingCountry
+
+-- 15.
+SELECT COUNT(pt.PlaylistId), p.Name
+FROM PlaylistTrack pt, Playlist p
+ON pt.PlaylistId = p.PlaylistId
+GROUP BY (pt.PlaylistId)
+
+-- 16.
+SELECT t.Name AS 'Track Name', 
+al.Title AS 'Album Name', 
+g.Name AS 'Genre', 
+mt.Name AS 'MediaType'
+FROM Track t, Album al, Genre g, MediaType mt
+ON t.AlbumId = al.AlbumId 
+AND t.GenreId = g.GenreId 
+AND t.MediaTypeId = mt.MediaTypeId
